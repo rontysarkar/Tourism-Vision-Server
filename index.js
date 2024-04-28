@@ -74,6 +74,35 @@ async function run() {
         const result = await touristsCollection.findOne(query)
         res.send(result)
     })
+
+    app.put('/tourists/:id',async(req,res)=>{
+      const id = req.params.id
+      const data = req.body
+      const filter = { _id: new ObjectId(req.params.id)}
+      const updateDoc = {
+        $set:{
+          tourists_spot_name : data.tourists_spot_name,
+          image:data.image,
+          country_Name: data.country_Name,
+          average_cost:data.average_cost,
+          short_description:data.short_description,
+          location:data.location,
+          totalVisitorsPerYear : data.totalVisitorsPerYear,
+          travel_time:data.travel_time,
+          seasonality:data.seasonality
+
+        }
+      }
+
+      const result = await touristsCollection.updateOne(filter,updateDoc)
+      res.send(result)
+      
+
+    })
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
