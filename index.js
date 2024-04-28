@@ -53,11 +53,26 @@ async function run() {
         res.send(result)
     })
 
+    app.get('/myList/:email',async(req,res)=>{
+      const email = req.params.email
+      // console.log(email)
+      const result = await touristsCollection.find({user_email:email}).toArray();
+      res.send(result)
+      
+    })
+
+    app.delete('/myList/:id',async(req,res)=>{
+       const id = req.params.id
+       const query = {_id: new ObjectId(id)}
+       const result = await touristsCollection.deleteOne(query)
+       res.send(result)
+    })
+
     app.get('/tourists/:id',async(req,res)=>{
-        const id = req.params
+        const id = req.params.id
         const query = { _id: new ObjectId(id)}
         const result = await touristsCollection.findOne(query)
-        res.send(res)
+        res.send(result)
     })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
