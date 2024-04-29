@@ -54,6 +54,12 @@ async function run() {
         res.send(result)
     })
 
+    app.get('/tourists/sort',async(req,res)=>{
+      const cursor = touristsCollection.find().sort({average_cost:1})
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
     app.get('/Countries',async(req,res)=>{
       const cursor = countryCollection.find()
       const result =await cursor.toArray()
